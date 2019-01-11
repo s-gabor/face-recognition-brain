@@ -24,3 +24,8 @@ body {
 button {
 	cursor: pointer;
 }
+
+/*ImageLinkForm doesn't get this !!! Why ???*/
+.border {
+  border: 5px solid black;
+}

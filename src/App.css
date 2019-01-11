@@ -16,6 +16,10 @@
   z-index: -1;
 }
 
+.border {
+  border: 3px solid red;
+}
+
 
 /*.App-logo {
   animation: App-logo-spin infinite 20s linear;
