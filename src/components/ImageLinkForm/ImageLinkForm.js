@@ -3,7 +3,7 @@ import 'tachyons';
 import './ImageLinkForm.css';
 
 
-const ImageLinkForm = ({onInputChange, onButtonClick}) => {
+const ImageLinkForm = (props) => {
 	return (
 		<div>
 			<p>This Magic Brain will detect faces in your picture. Give it a try.</p>
@@ -13,11 +13,11 @@ const ImageLinkForm = ({onInputChange, onButtonClick}) => {
 						className='f4 pa2 w-70 center' 
 						type='text' 
 						placeholder='enter your link here' 
-						onChange={onInputChange}
+						onChange={props.onInputChange}
 					/>
 					<button 
 						className='w-30 grow f4 link ph3 pv2 dib white bg-light-purple'
-						onClick={onButtonClick}
+						onClick={props.onButtonClick}
 					>Detect</button>
 				</div>
 			</div>
