@@ -37,19 +37,25 @@ class App extends Component {
     constructor() {
         super()
         this.state = {
-            input: ''
+            input: '',
+            imageUrl: 'https://scontent.fclj2-1.fna.fbcdn.net/v/t1.0-9/50411514_10213490605323527_4480036934273466368_n.jpg?_nc_cat=108&_nc_ht=scontent.fclj2-1.fna&oh=74caa8bbf41e1924a00e7839387844f1&oe=5CFBE8F1'
         }
     }
 
     onInputChange = (event) => {
-        console.log(event.target.value);
+        // console.log(event.target.value);
+        this.setState({input: event.target.value});
+        console.log(this.state.input)
     }
 
     onButtonClick = () => {
+        // when clicked it displays the new image 
+        this.setState({imageUrl: this.state.input});
         // fetch response from Clarifai API
-        app.models.predict(Clarifai.GENERAL_MODEL, 'https://samples.clarifai.com/metro-north.jpg')
+        app.models.predict(Clarifai.DEMOGRAPHICS_MODEL, this.state.input)
           .then(response => {
-            console.log(response);
+            // get nested info from clarifai documentation
+            console.log(response.outputs[0].data.regions[0].region_info.bounding_box);
           })
           .catch(err => {
             console.log(err);
@@ -67,7 +73,9 @@ class App extends Component {
                 onInputChange={this.onInputChange} 
                 onButtonClick={this.onButtonClick}
             />
-            <FaceRecognition />
+            <FaceRecognition 
+                imageUrl={this.state.imageUrl}
+            />
           </div>
         );
     }
