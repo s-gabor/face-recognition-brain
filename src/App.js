@@ -3,15 +3,18 @@ import React, { Component } from 'react';
 import Clarifai from 'clarifai';
 import Particles from 'react-particles-js';
 import Navigation from './components/Navigation/Navigation';
+import SignIn from './components/SignIn/SignIn';
 import Logo from './components/Logo/Logo';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
 import Rank from './components/Rank/Rank';
 import FaceRecognition from './components/FaceRecognition/FaceRecognition';
 import './App.css';
 
+
 const app = new Clarifai.App({
  apiKey: 'cfadf9345cbd4de08dd06a6871913006'
 });
+
 
 const particlesOption = {
             "particles": {
@@ -31,9 +34,6 @@ const particlesOption = {
                 }
             }
         }
-
-
-
 
 
 class App extends Component {
@@ -89,6 +89,7 @@ class App extends Component {
             <Particles className='particles' params={particlesOption} />
             <Navigation />
             <Logo />
+            <SignIn />
             <Rank />
             <ImageLinkForm 
                 onInputChange={this.onInputChange} 
@@ -104,17 +105,6 @@ class App extends Component {
 }
 
 export default App;
-
-// <div 
-//     class="bounding-box 021063761-051509696-044575834-06488487" 
-//     style="
-//             top: 21.063761%; 
-//             right: 35.11513000000001%; 
-//             bottom: 48.490303999999995%; 
-//             left: 44.575834%;"
-//     >
-// </div>
-
 
 
 
