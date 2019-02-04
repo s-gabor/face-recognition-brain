@@ -44,15 +44,17 @@ class App extends Component {
             imageUrl: '',
             box: {},
             route: 'signin', // 3 options: signin / register / home
-            isSignedIn: false
+            isSignedIn: false,
+            user: {
+                id: '1', // TODO: must update when user signs in (now it is undefined at SignIn and onButtonClick -> id: 1)
+                name: '',
+                email: '',
+                password: '',
+                rank: 0,
+                joined: ''
+            }
         }
     }
-
-    // componentDidMount() {
-    //     fetch('http://localhost:3000')
-    //         .then(response => response.json())
-    //         .then(console.log);
-    // }
 
     onInputChange = (event) => {
         this.setState({input: event.target.value});
@@ -79,9 +81,29 @@ class App extends Component {
         // when clicked it displays the new image 
         this.setState({imageUrl: this.state.input});
         // fetch response from Clarifai API
-        app.models.predict(Clarifai.DEMOGRAPHICS_MODEL, this.state.input)
-          .then(response => this.displayFaceBox(this.calculateFaceLocation(response)))
-          .catch(err => console.log(err));
+        app.models
+            .predict(Clarifai.DEMOGRAPHICS_MODEL, this.state.input)
+            .then(response => {
+                if (response) {
+                    // fetch user data
+                    fetch('http://localhost:3000/image', {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            userId: this.state.user.id // must create the user in state
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(userObj => {
+                        // update active user data
+                        this.setState({user: userObj});
+                    })
+                }
+                this.displayFaceBox(this.calculateFaceLocation(response));
+            })
+            .catch(err => console.log(err));
     }
 
     onRouteChange = (route) => {
@@ -101,7 +123,7 @@ class App extends Component {
                 {this.state.route === 'home'
                     ?   <div>
                             <Logo />
-                            <Rank />
+                            <Rank name={this.state.user.name} rank={this.state.user.rank}/>
                             <ImageLinkForm 
                                 onInputChange={this.onInputChange} 
                                 onButtonClick={this.onButtonClick}
