@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// const Clarifai = require('clarifai');
 import Clarifai from 'clarifai';
 import Particles from 'react-particles-js';
 import Navigation from './components/Navigation/Navigation';
@@ -46,7 +45,7 @@ class App extends Component {
             route: 'signin', // 3 options: signin / register / home
             isSignedIn: false,
             user: {
-                id: '1', // TODO: must update when user signs in (now it is undefined at SignIn and onButtonClick -> id: 1)
+                id: '', 
                 name: '',
                 email: '',
                 password: '',
@@ -54,6 +53,17 @@ class App extends Component {
                 joined: ''
             }
         }
+    }
+
+    loadUser = (userData) => {
+        console.log('userData from app/loadUser: ', userData);
+        this.setState({user:{
+            id: userData.userId,
+            name: userData.name,
+            email: userData.email,
+            rank: userData.rank,
+            joined: userData.joined,
+        }})
     }
 
     onInputChange = (event) => {
@@ -97,8 +107,10 @@ class App extends Component {
                     })
                     .then(response => response.json())
                     .then(userObj => {
-                        // update active user data
-                        this.setState({user: userObj});
+                        // update user rank with each new image submit
+                        let user = Object.assign({}, this.state.user);
+                        user.rank = userObj.rank;
+                        this.setState({user});
                     })
                 }
                 this.displayFaceBox(this.calculateFaceLocation(response));
@@ -134,7 +146,7 @@ class App extends Component {
                             />
                         </div>
                     :   (this.state.route === 'signin'
-                            ?   <SignIn onRouteChange={this.onRouteChange}/>
+                            ?   <SignIn loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
                             :   <Register onRouteChange={this.onRouteChange}/>
                         )
                 }   

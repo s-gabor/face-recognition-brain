@@ -31,11 +31,13 @@ class SignIn extends React.Component {
 			})
 		})
 			.then(response => response.json())
-			.then(data => {
-				if (data['email']) {
+			.then(user => {
+				if (user['email']) {
+					console.log('user from onSignIn: ', user);
+					this.props.loadUser(user);
 					this.props.onRouteChange('home');
 				} else {
-					console.log(data);
+					console.log(user);
 				}
 			})
 			.catch(err => console.log('Errorrrrr from fetch onSignIn!', err))
