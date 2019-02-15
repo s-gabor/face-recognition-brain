@@ -1,3 +1,10 @@
+# Smart Brain
+
+Full app that has a front-end using React, it uses an image recognition API, it has it’s own server(smart-brain-api) using Node and Express, and finally, it’s connected to a database. 
+It is a fully responsive website(with some fancy animations: a tilting logo, an interactive background). 
+The user has the ability to Sign In, Register and Sign Out. Once logged in the user can enter an image url and the app will detect(through the Clarifai API) the faces in the image and draw a box around them(in progress).
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
