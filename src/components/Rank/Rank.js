@@ -5,7 +5,7 @@ const Rank = (props) => {
 	return (
 		<div>
 			<div className='white f3'>
-				{`${props.name}, your current rank is...`}
+				{`${props.name}, your current number of searches is...`}
 			</div>
 			<div className='white f1'>
 				{`${props.rank}`}
